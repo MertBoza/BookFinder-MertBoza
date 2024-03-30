@@ -1,0 +1,24 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div *ngIf="loading" class="text-center">
+          <p>Loading...</p>
+        </div>
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+        <div *ngIf="book" class="card">
+          <img [src]="book.volumeInfo?.imageLinks?.thumbnail" class="card-img-top" alt="Book Cover">
+          <div class="card-body">
+            <h5 class="card-title">{{ book.volumeInfo?.title }}</h5>
+            <p class="card-text">Author: {{ book.volumeInfo?.authors?.join(', ') || 'Unknown' }}</p>
+            <p class="card-text">Published Date: {{ book.volumeInfo?.publishedDate || 'Unknown' }}</p>
+            <p class="card-text">Publisher: {{ book.volumeInfo?.publisher || 'Unknown' }}</p>
+            <p class="card-text">Description: {{ book.volumeInfo?.description || 'Description not available' }}</p>
+            <a href="{{ book.volumeInfo?.infoLink }}" class="btn btn-primary" target="_blank">View More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

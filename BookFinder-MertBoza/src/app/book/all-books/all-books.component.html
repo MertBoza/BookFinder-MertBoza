@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="searchQuery" class="form-control" placeholder="Search for books..." />
+          <select [(ngModel)]="searchBy" class="form-select">
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="isbn">ISBN</option>
+          </select>
+          <button (click)="search()" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  
+    <p class="text-center font fw-bold mt-5">Here are a selection of our books</p>
+    <div class="container mt-3">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+        <div class="col" *ngFor="let book of books">
+          <div class="card h-100">
+            <img [src]="book.volumeInfo?.imageLinks?.thumbnail" alt="No Book Cover Available" class="card-img-top" style="height: 350px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ book.volumeInfo?.title }}</h5>
+              <ul class="list-group list-group-flush text-center">
+                <li class="list-group-item">Author: {{ book.volumeInfo?.authors?.join(', ') || 'Unknown' }}</li>
+                <li class="list-group-item">Release date: {{ book.volumeInfo?.publishedDate || 'Unknown' }}</li>
+                <li class="list-group-item">Publisher: {{ book.volumeInfo?.publisher || 'Unknown' }}</li>
+              </ul>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a [routerLink]="['/book-details']" [queryParams]="{ bookId: book.id }" class="btn btn-primary fixed-button-size">Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
