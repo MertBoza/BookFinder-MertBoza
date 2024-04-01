@@ -27,7 +27,7 @@ export class BookService {
   }
 
   getRandomBooks(): Observable<any> {
-    const randomPage = Math.floor(Math.random() * 100);
+    const randomPage = Math.floor(Math.random() * 50);
     const query = 'fiction'; 
     const url = `${this.apiUrl}?q=${query}&startIndex=${randomPage * 10}&maxResults=10&key=${this.apiKey}`;
     return this.http.get(url);
