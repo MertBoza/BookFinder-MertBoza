@@ -18,17 +18,20 @@ export class AllBooksComponent implements OnInit {
   constructor(private bookService: BookService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getRandomBooks();
+    this.fetchBooks();
   }
 
-  getRandomBooks(): void {
+  fetchBooks(): void {
+    this.loading = true; 
     this.bookService.getRandomBooks()
       .subscribe(
         (data: any) => {
           console.log("API Response:", data); 
           if (data && data.items && data.items.length > 0) {
             this.books = data.items.slice(0, 9);
+            this.error = null; 
           } else {
+            this.books = [];
             this.error = 'No books found.';
           }
           this.loading = false;
@@ -36,17 +39,24 @@ export class AllBooksComponent implements OnInit {
         (error) => {
           console.error('Error fetching random books:', error);
           this.error = 'Failed to fetch books. Please try again later.';
+          this.books = []; 
           this.loading = false;
         }
       );
   }
 
   search(): void {
+    this.loading = true;
     this.bookService.searchBooks(this.searchQuery, this.searchBy)
       .subscribe(
         (data: any) => {
-          this.books = data.items;
-          this.error = '';
+          if (data && data.items && data.items.length > 0) {
+            this.books = data.items;
+            this.error = '';
+          } else {
+            this.books = [];
+            this.error = 'No books found.';
+          }
           this.loading = false;
         },
         (error) => {
@@ -56,10 +66,5 @@ export class AllBooksComponent implements OnInit {
           this.loading = false;
         }
       );
-  }
-
-  viewDetails(bookId: string): void {
-    // Navigate to book-details component with book ID parameter
-    this.router.navigate(['/book-details'], { queryParams: { bookId: bookId } });
   }
 }

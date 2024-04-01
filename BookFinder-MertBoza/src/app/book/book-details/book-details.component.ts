@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from '../book.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-book-details',
@@ -12,7 +13,7 @@ export class BookDetailsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
-  constructor(private route: ActivatedRoute, private bookService: BookService) { }
+  constructor(private route: ActivatedRoute, private bookService: BookService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -37,4 +38,9 @@ export class BookDetailsComponent implements OnInit {
         }
       );
   }
+
+  sanitizeDescription(description: string): string {
+    return description ? description.replace(/<(\/?(b|br|p|i))>/g, '') : '';
+  }
+  
 }
