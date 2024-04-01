@@ -18,6 +18,7 @@
               <p class="card-text">Author: {{ book.volumeInfo?.authors?.join(', ') || 'Unknown' }}</p>
               <p class="card-text">Published Date: {{ book.volumeInfo?.publishedDate || 'Unknown' }}</p>
               <p class="card-text">Publisher: {{ book.volumeInfo?.publisher || 'Unknown' }}</p>
+              <p class="card-text">ISBN: {{ book.volumeInfo?.industryIdentifiers[0]?.identifier || 'Unknown' }}</p>
               <p class="card-text">Description: {{ sanitizeDescription(book.volumeInfo?.description) || 'Description not available' }}</p>
               <a [href]="'https://books.google.com/books?id=' + book.id" class="btn btn-primary" target="_blank">View More</a>
             </div>
